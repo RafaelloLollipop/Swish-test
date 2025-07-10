@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      image_tag: ${{ steps.set_tag.outputs.tag }}
+      IMAGE_TAG: ${{ steps.set_tag.outputs.IMAGE_TAG }}
     permissions:
       id-token: write
       contents: read
