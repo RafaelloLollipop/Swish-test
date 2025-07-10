@@ -23,4 +23,4 @@ jobs:
         with:
           context: ./swish-base-docker
           push: true
-            tags: vallher/swish-base-docker:${{ github.ref_name }}
+          tags: vallher/swish-base-docker:${{ github.ref_name }}
