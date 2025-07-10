@@ -69,6 +69,10 @@ jobs:
         with:
           version: v3.14.0
 
+      - name: Helm template
+        run: |
+          helm template swish-app ./helm/base-app
+
       - name: Deploy app with Helm
         if: github.ref == 'refs/heads/main' || github.event.inputs.deploy == 'true'
         run: |
