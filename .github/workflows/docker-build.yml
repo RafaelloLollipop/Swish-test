@@ -3,11 +3,22 @@ name: Build and Test on PR
 on:
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy with Helm'
+        required: false
+        default: false
+        type: boolean
+
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,3 +58,23 @@ jobs:
 
       - name: Push image
         run: docker push vallher/swish-base-docker:${{ env.TAG_NAME }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::350152846698:role/github-actions-eks-deploy
+          aws-region: us-east-1
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.14.0
+
+      - name: Deploy app with Helm
+        if: github.ref == 'refs/heads/main' || github.event.inputs.deploy == 'true'
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name swish-play
+          helm upgrade --install swish-app ./helm/base-app \
+            --namespace swish \
+            --create-namespace \
+            --set image.repository=vallher/swish-base-docker \
+            --set image.tag=${{ env.IMAGE_TAG }}
