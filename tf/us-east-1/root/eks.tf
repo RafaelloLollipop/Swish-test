@@ -25,3 +25,21 @@ module "eks" {
   cluster_endpoint_private_access = false
   cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
 }
+
+resource "aws_eks_access_entry" "github_actions" {
+  cluster_name      = local.cluster_name
+  principal_arn     = aws_iam_role.github_actions.arn
+  kubernetes_groups = []
+  type              = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "github_actions" {
+  cluster_name  = local.cluster_name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = aws_iam_role.github_actions.arn
+
+  access_scope {
+    type       = "cluster"
+  }
+}
+

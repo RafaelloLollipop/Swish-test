@@ -30,35 +30,19 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-resource "aws_iam_policy" "github_actions_permissions" {
-  name        = "GitHubActionsEKSAccess"
-  description = "Permissions for GitHub Actions to access EKS"
+resource "aws_iam_role_policy" "eks_access" {
+  name = "eks-access"
+  role = aws_iam_role.github_actions.name
 
   policy = jsonencode({
-    Version = "2012-10-17",
+    Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow",
-        Action = [
-          "eks:DescribeCluster",
-          "eks:ListClusters"
-        ],
-        Resource = "*"
-      },
-      {
-        Effect = "Allow",
-        Action = [
-          "s3:*",
-          "dynamodb:*"
-        ],
-        Resource = "*"
-      },
-      {
-        Effect = "Allow",
-        Action = [
-          "sts:GetCallerIdentity"
-        ],
-        Resource = "*"
+        Effect   = "Allow"
+        Action   = [
+          "eks:DescribeCluster"
+        ]
+        Resource = "arn:aws:eks:us-east-1:${data.aws_caller_identity.current.account_id}:cluster/swish-play"
       }
     ]
   })
