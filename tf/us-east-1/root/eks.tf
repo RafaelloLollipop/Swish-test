@@ -21,13 +21,4 @@ module "eks" {
     }
   }
 
-  tags = {
-    Environment = "dev"
-    Name        = "minimal-eks"
-  }
-}
-
-output "kubeconfig" {
-  value     = module.eks.kubeconfig
-  sensitive = true
 }
