@@ -1,6 +1,8 @@
 name: Build and Test on PR
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -11,11 +13,12 @@ on:
         default: false
         type: boolean
 
-
 jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set_tag.outputs.tag }}
     permissions:
       id-token: write
       contents: read
@@ -30,7 +33,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set Docker tag from short SHA
-        run: echo "TAG_NAME=sha-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+        id: set_tag
+        run: |
+          IMAGE_TAG="sha-$(echo $GITHUB_SHA | cut -c1-7)"
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+          echo "::set-output name=tag::${IMAGE_TAG}"
 
       - name: Build image
         uses: docker/build-push-action@v5
@@ -59,11 +66,20 @@ jobs:
       - name: Push image
         run: docker push vallher/swish-base-docker:${{ env.TAG_NAME }}
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event.inputs.deploy == 'true'
+    permissions:
+      id-token: write
+      contents: read
+    steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::350152846698:role/github-actions-eks-deploy
           aws-region: us-east-1
+
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
@@ -74,11 +90,10 @@ jobs:
           helm template swish-app ./helm/base-app
 
       - name: Deploy app with Helm
-        if: github.ref == 'refs/heads/main' || github.event.inputs.deploy == 'true'
         run: |
           aws eks update-kubeconfig --region us-east-1 --name swish-play
           helm upgrade --install swish-app ./helm/base-app \
             --namespace swish \
             --create-namespace \
             --set image.repository=vallher/swish-base-docker \
-            --set image.tag=${{ env.TAG_NAME }}
+            --set image.tag=${{ needs.build.outputs.image_tag }}
