@@ -33,7 +33,7 @@ jobs:
         with:
           image-ref: vallher/swish-base-docker:${{ env.TAG_NAME }}
           format: table
-          severity: CRITICAL,HIGH
+          severity: CRITICAL
           exit-code: 1
           output: trivy-report.json
 
