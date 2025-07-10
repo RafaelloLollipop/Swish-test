@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: swish-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: swish
   ports:
     - protocol: TCP
       port: 80
       targetPort: {{ .Values.containerPort }}
+      nodePort: 30080
