@@ -80,5 +80,5 @@ jobs:
           helm upgrade --install swish-app ./helm/base-app \
             --namespace swish \
             --create-namespace \
-            --set "image.repository=vallher/swish-base-docker" \
-            --set "image.tag=${{ env.IMAGE_TAG }}"
+            --set image.repository=vallher/swish-base-docker \
+            --set image.tag=${{ env.TAG_NAME }}
