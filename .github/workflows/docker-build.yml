@@ -74,5 +74,7 @@ jobs:
         run: |
           aws eks update-kubeconfig --region us-east-1 --name swish-play
           helm upgrade --install swish-app ./helm/base-app \
-          --set image.repository=vallher/swish-base-docker \
-          --set image.tag=${{ env.IMAGE_TAG }}
+            --namespace swish \
+            --create-namespace \
+            --set image.repository=vallher/swish-base-docker \
+            --set image.tag=${{ env.IMAGE_TAG }}
