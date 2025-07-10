@@ -37,7 +37,7 @@ jobs:
         run: |
           IMAGE_TAG="sha-$(echo $GITHUB_SHA | cut -c1-7)"
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
-          echo "::set-output name=image_tag::${IMAGE_TAG}"
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_OUTPUT
 
       - name: Build image
         uses: docker/build-push-action@v5
@@ -99,4 +99,4 @@ jobs:
             --namespace swish \
             --create-namespace \
             --set image.repository=vallher/swish-base-docker \
-            --set image.tag=${{ needs.build.outputs.image_tag }}
+            --set image.tag=${{ needs.build.outputs.IMAGE_TAG }}
