@@ -17,3 +17,37 @@ resource "aws_iam_role" "github_actions" {
     }]
   })
 }
+
+resource "aws_iam_policy" "github_actions_permissions" {
+  name        = "GitHubActionsEKSAccess"
+  description = "Permissions for GitHub Actions to access EKS"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "eks:DescribeCluster",
+          "eks:ListClusters"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:*",
+          "dynamodb:*"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "sts:GetCallerIdentity"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
