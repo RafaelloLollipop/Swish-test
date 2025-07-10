@@ -28,5 +28,13 @@ jobs:
           load: true
           tags: vallher/swish-base-docker:${{ env.TAG_NAME }}
 
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: vallher/swish-base-docker:${{ env.TAG_NAME }}
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
       - name: Push image
         run: docker push vallher/swish-base-docker:${{ env.TAG_NAME }}
