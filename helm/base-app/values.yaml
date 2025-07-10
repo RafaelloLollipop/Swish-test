@@ -1,0 +1,7 @@
+image:
+  repository: vallher/swish-base-docker
+  tag: latest
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+containerPort: 8080

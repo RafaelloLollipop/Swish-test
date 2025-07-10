@@ -73,3 +73,6 @@ jobs:
         if: github.ref == 'refs/heads/main' || github.event.inputs.deploy == 'true'
         run: |
           aws eks update-kubeconfig --region us-east-1 --name swish-play
+          helm upgrade --install swish-app ./helm/base-app \
+          --set image.repository=vallher/swish-base-docker \
+          --set image.tag=${{ env.IMAGE_TAG }}
