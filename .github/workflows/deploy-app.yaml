@@ -1,0 +1,61 @@
+name: Launch Dev Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      user:
+        description: "User name"
+        required: true
+        default: "testuser"
+      base_image:
+        description: "Base image"
+        required: true
+        default: "python:3.10"
+      packages:
+        description: "Comma-separated packages"
+        required: false
+        default: "numpy,pandas"
+      cpu:
+        description: "CPU request"
+        required: true
+        default: "1000m"
+      memory:
+        description: "Memory request"
+        required: true
+        default: "1Gi"
+      gpu:
+        description: "GPU request"
+        required: true
+        default: "0"
+      team:
+        description: "Team/project tag"
+        required: false
+        default: "team-a"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Deploy dev env with Helm
+        run: |
+          helm upgrade --install dev-env-${{ github.run_id }} ./charts/dev-env \
+            --namespace dev-environments \
+            --create-namespace \
+            --set image=${{ github.event.inputs.base_image }} \
+            --set packages=${{ github.event.inputs.packages }} \
+            --set resources.cpu=${{ github.event.inputs.cpu }} \
+            --set resources.memory=${{ github.event.inputs.memory }} \
+            --set resources.gpu=${{ github.event.inputs.gpu }} \
+            --set user=${{ github.event.inputs.user }} \
+            --set team=${{ github.event.inputs.team }}

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swish-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: swish
+  template:
+    metadata:
+      labels:
+        app: swish
+    spec:
+      nodeSelector:
+        team: {{ .Values.team | quote }}
+        project: {{ .Values.project | quote }}
+
+      tolerations:
+        - key: "team"
+          operator: "Equal"
+          value: {{ .Values.team | quote }}
+          effect: "NoSchedule"
+
+      containers:
+        - name: swish
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sleep", "infinity"]
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.cpu | quote }}
+              memory: {{ .Values.resources.memory | quote }}
+            limits:
+              nvidia.com/gpu: {{ .Values.resources.gpu | quote }}
