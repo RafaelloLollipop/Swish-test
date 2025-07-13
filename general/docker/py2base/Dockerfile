@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim as py2base
+FROM debian:bookworm-slim as py2base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget build-essential libssl-dev zlib1g-dev libbz2-dev ca-certificates openssl \

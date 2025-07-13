@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "swish-play"
+  cluster_name = "swish-play-general"
 }
 
 module "eks" {
@@ -20,49 +20,6 @@ module "eks" {
       max_size       = 1
     }
 
-    team-a = {
-      instance_types = ["t3.small"]
-      min_size       = 0
-      max_size       = 3
-      desired_size   = 1
-
-      labels = {
-        team    = "team-a"
-        project = "project-x"
-      }
-
-      taints = [{
-        key    = "team"
-        value  = "team-a"
-        effect = "NO_SCHEDULE"
-      }]
-
-      tags = {
-        "k8s.io/cluster-autoscaler/enabled" = "true"
-      }
-    }
-
-    team-b = {
-      instance_types = ["t3.small"]
-      min_size       = 1
-      max_size       = 3
-      desired_size   = 1
-
-      labels = {
-        team    = "team-b"
-        project = "project-x"
-      }
-
-      taints = [{
-        key    = "team"
-        value  = "team-b"
-        effect = "NO_SCHEDULE"
-      }]
-
-      tags = {
-        "k8s.io/cluster-autoscaler/enabled"             = "true"
-      }
-    }
   }
 
   cluster_endpoint_public_access  = true
