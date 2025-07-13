@@ -14,7 +14,6 @@ on:
         type: boolean
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     outputs:
@@ -42,14 +41,14 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v5
         with:
-          context: ./swish-base-docker
+          context: ./general/docker/py2py3r
           load: true
-          tags: vallher/swish-base-docker:${{ env.IMAGE_TAG }}
+          tags: vallher/py2py3r:${{ env.IMAGE_TAG }}
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: vallher/swish-base-docker:${{ env.IMAGE_TAG }}
+          image-ref: vallher/py2py3r:${{ env.IMAGE_TAG }}
           format: table
           severity: CRITICAL
           exit-code: 1
@@ -64,7 +63,7 @@ jobs:
           retention-days: 5
 
       - name: Push image
-        run: docker push vallher/swish-base-docker:${{ env.IMAGE_TAG }}
+        run: docker push vallher/py2py3r:${{ env.IMAGE_TAG }}
 
   deploy:
     needs: build
@@ -98,5 +97,5 @@ jobs:
           helm upgrade --install swish-app ./helm/base-app \
             --namespace swish \
             --create-namespace \
-            --set image.repository=vallher/swish-base-docker \
+            --set image.repository=vallher/py2py3r \
             --set image.tag=${{ needs.build.outputs.IMAGE_TAG }}

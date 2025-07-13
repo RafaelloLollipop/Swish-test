@@ -5,3 +5,10 @@ image:
 
 replicaCount: 1
 containerPort: 8080
+
+resources:
+  cpu: "10m"
+  memory: "10"
+  gpu: "0"
+
+team: team-a
