@@ -1,4 +1,4 @@
-name: Build and Test on PR
+name: Build, test and deploy
 
 on:
   push:
@@ -89,12 +89,12 @@ jobs:
 
       - name: Helm template
         run: |
-          helm template swish-app ./helm/base-app
+          helm template swish-app ./general/helm/base-app
 
       - name: Deploy app with Helm
         run: |
           aws eks update-kubeconfig --region us-east-1 --name swish-play-general
-          helm upgrade --install swish-app ./helm/base-app \
+          helm upgrade --install swish-app ./general/helm/base-app \
             --namespace swish \
             --create-namespace \
             --set image.repository=vallher/py2py3r \
