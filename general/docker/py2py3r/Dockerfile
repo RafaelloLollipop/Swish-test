@@ -16,3 +16,6 @@ COPY requirements-py2.txt /tmp/
 COPY requirements-py3.txt /tmp/
 RUN pip2 install --no-cache-dir -r /tmp/requirements-py2.txt
 RUN pip install --no-cache-dir -r /tmp/requirements-py3.txt
+
+RUN useradd -m non-root
+USER non-root
