@@ -1,0 +1,65 @@
+
+Report Summary
+
+┌────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┬─────────┐
+│                                   Target                                   │    Type    │ Vulnerabilities │ Secrets │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ vallher/py2py3r:sha-ec10f6d (debian 12.11)                                 │   debian   │        1        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/lib-dynload/Python-2.7.18-py2.7.egg-info           │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/certifi-2021.10.8.dist-info/METADATA │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/chardet-4.0.0.dist-info/METADATA     │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/idna-2.10.dist-info/METADATA         │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/pip-20.3.4.dist-info/METADATA        │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/requests-2.27.1.dist-info/METADATA   │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/setuptools-44.1.1.dist-info/METADATA │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/urllib3-1.26.20.dist-info/METADATA   │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/site-packages/wheel-0.37.1.dist-info/METADATA      │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python2.7/wsgiref.egg-info                                   │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/certifi-2025.7.9.dist-info/METADATA │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/chardet-3.0.4.dist-info/METADATA    │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/idna-2.8.dist-info/METADATA         │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA       │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/requests-2.22.0.dist-info/METADATA  │ python-pkg │        0        │    -    │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.12/site-packages/urllib3-1.25.11.dist-info/METADATA  │ python-pkg │        0        │    -    │
+└────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+For OSS Maintainers: VEX Notice
+--------------------------------
+If you're an OSS maintainer and Trivy has detected vulnerabilities in your project that you believe are not actually exploitable, consider issuing a VEX (Vulnerability Exploitability eXchange) statement.
+VEX allows you to communicate the actual status of vulnerabilities in your project, improving security transparency and reducing false positives for your users.
+Learn more and start using VEX: https://trivy.dev/v0.64/docs/supply-chain/vex/repo#publishing-vex-documents
+
+To disable this notice, set the TRIVY_DISABLE_VEX_NOTICE environment variable.
+
+
+vallher/py2py3r:sha-ec10f6d (debian 12.11)
+==========================================
+Total: 1 (CRITICAL: 1)
+
+┌─────────┬────────────────┬──────────┬──────────────┬───────────────────┬───────────────┬────────────────────────────────────────────────────────┐
+│ Library │ Vulnerability  │ Severity │    Status    │ Installed Version │ Fixed Version │                         Title                          │
+├─────────┼────────────────┼──────────┼──────────────┼───────────────────┼───────────────┼────────────────────────────────────────────────────────┤
+│ zlib1g  │ CVE-2023-45853 │ CRITICAL │ will_not_fix │ 1:1.2.13.dfsg-1   │               │ zlib: integer overflow and resultant heap-based buffer │
+│         │                │          │              │                   │               │ overflow in zipOpenNewFileInZip4_6                     │
+│         │                │          │              │                   │               │ https://avd.aquasec.com/nvd/cve-2023-45853             │
+└─────────┴────────────────┴──────────┴──────────────┴───────────────────┴───────────────┴────────────────────────────────────────────────────────┘
