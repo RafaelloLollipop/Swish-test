@@ -1,6 +1,6 @@
-FROM vallher/debian-bullseye-slim-py2.7:13_06_2025 as py2base
+FROM vallher/py2base:13_07_2025 as py2base
 
-FROM python:3.12-slim-bullseye as final
+FROM python:3.12-slim-bookworm as final
 
 COPY --from=py2base /usr/local/bin/python2.7 /usr/local/bin/python2.7
 COPY --from=py2base /usr/local/bin/pip2 /usr/local/bin/pip2
