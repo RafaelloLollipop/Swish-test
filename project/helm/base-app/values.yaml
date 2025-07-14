@@ -20,5 +20,5 @@ autoscaling:
   cooldownPeriod: 30
   idleReplicaCount: 0
   initialCooldownPeriod: 30
-  threshold: "5"
+  threshold: "0.05"
   queryRange: "15m"

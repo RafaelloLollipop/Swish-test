@@ -22,5 +22,5 @@ spec:
               namespace="{{ .Release.Namespace }}",
               pod=~"{{ .Release.Name }}.*"
             }[{{ .Values.autoscaling.queryRange }}])
-          ) * 100
+          )
         threshold: "{{ .Values.autoscaling.threshold }}"
