@@ -14,11 +14,11 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: "http://prometheus-operated.monitoring:9090"
-        metricName: {{ .Release.Name }}-cpu-idle
+        metricName: {{ .Release.Name }}-cpu-usage
         query: |
-          avg_over_time(container_cpu_usage_seconds_total{
+          sum(rate(container_cpu_usage_seconds_total{
             container!="",
             namespace="{{ .Release.Namespace }}",
             pod=~"{{ .Release.Name }}.*"
-          }[30s]) or vector(0)
-        threshold: "{{ .Values.autoscaling.threshold }}"
+          }[1m])) or vector(0)
+        threshold: "0.05"
