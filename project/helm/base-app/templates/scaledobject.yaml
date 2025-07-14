@@ -7,9 +7,8 @@ spec:
     name: {{ .Release.Name }}-deployment
   minReplicaCount: 0
   maxReplicaCount: 1
-#  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
-#  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
-#  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
+  pollingInterval: 15          # szybsze sprawdzanie
+  cooldownPeriod: 60           # zeskaluje po 60s od idle
   initialCooldownPeriod: 30
   triggers:
     - type: prometheus
@@ -17,9 +16,9 @@ spec:
         serverAddress: "http://prometheus-operated.monitoring:9090"
         metricName: {{ .Release.Name }}-cpu-idle
         query: |
-            avg_over_time(container_cpu_usage_seconds_total{
-              container!="",
-              namespace="{{ .Release.Namespace }}",
-              pod=~"{{ .Release.Name }}.*"
-            }[{{ .Values.autoscaling.queryRange }}])
+          avg_over_time(container_cpu_usage_seconds_total{
+            container!="",
+            namespace="{{ .Release.Namespace }}",
+            pod=~"{{ .Release.Name }}.*"
+          }[30s]) or vector(0)
         threshold: "{{ .Values.autoscaling.threshold }}"
