@@ -7,6 +7,7 @@ spec:
     name: {{ .Release.Name }}-service
   minReplicaCount: 0
   maxReplicaCount: {{ .Values.autoscaling.maxReplicaCount }}
+  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
   pollingInterval: {{ .Values.autoscaling.pollingInterval }}
   cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
   initialCooldownPeriod: {{ .Values.autoscaling.initialCooldownPeriod }}
