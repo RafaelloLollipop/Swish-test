@@ -1,20 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: swish-deployment
+  name: {{ .Release.Name }}-service
+  labels:
+    app: {{ .Release.Name }}
+    team: {{ .Values.team | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: swish
+      app: {{ .Release.Name }}
+      team: {{ .Values.team | quote }}
   template:
     metadata:
       labels:
-        app: swish
+        app: {{ .Release.Name }}
+        team: {{ .Values.team | quote }}
     spec:
       nodeSelector:
         team: {{ .Values.team | quote }}
-        project: {{ .Values.project | quote }}
 
       tolerations:
         - key: "team"
@@ -33,5 +37,3 @@ spec:
             requests:
               cpu: {{ .Values.resources.cpu | quote }}
               memory: {{ .Values.resources.memory | quote }}
-            limits:
-              nvidia.com/gpu: {{ .Values.resources.gpu | quote }}

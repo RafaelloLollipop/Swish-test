@@ -1,0 +1,13 @@
+prometheus:
+  prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    additionalScrapeConfigs:
+      name: additional-scrape-configs
+      key: scrape-config.yaml
+
+kube-state-metrics:
+  metricLabelsAllowlist:
+    - pods=[team]
