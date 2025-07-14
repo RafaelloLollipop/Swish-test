@@ -10,7 +10,7 @@ spec:
 #  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
 #  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
 #  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
-#  initialCooldownPeriod: 30
+  initialCooldownPeriod: 30
   triggers:
     - type: prometheus
       metadata:
