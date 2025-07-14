@@ -4,66 +4,67 @@ locals {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.8.4"
+  version         = "20.37.1"
 
   cluster_name    = local.cluster_name
-  cluster_version = "1.30"
+  cluster_version = "1.33"
 
   subnet_ids      = module.vpc.public_subnets
   vpc_id          = module.vpc.vpc_id
 
-  eks_managed_node_groups = {
-    default = {
-      instance_types = ["t3.micro"]
-      desired_size   = 1
+eks_managed_node_groups = {
+    tools = {
+      instance_types = ["t3.medium"]
       min_size       = 1
-      max_size       = 1
+      max_size       = 3
+      desired_size   = 1
+
+      taints = [{
+        key    = "group"
+        value  = "tools"
+        effect = "NO_SCHEDULE"
+      }]
+
+      labels = {
+        group = "tools"
+      }
     }
 
     team-a = {
       instance_types = ["t3.small"]
-      min_size       = 0
-      max_size       = 3
+      min_size       = 1
+      max_size       = 5
       desired_size   = 1
 
-      labels = {
-        team    = "team-a"
-        project = "project-x"
-      }
-
       taints = [{
-        key    = "team"
+        key    = "group"
         value  = "team-a"
         effect = "NO_SCHEDULE"
       }]
 
-      tags = {
-        "k8s.io/cluster-autoscaler/enabled" = "true"
+      labels = {
+        group = "team-a"
       }
     }
 
     team-b = {
       instance_types = ["t3.small"]
       min_size       = 1
-      max_size       = 3
+      max_size       = 5
       desired_size   = 1
 
-      labels = {
-        team    = "team-b"
-        project = "project-x"
-      }
-
       taints = [{
-        key    = "team"
+        key    = "group"
         value  = "team-b"
         effect = "NO_SCHEDULE"
       }]
 
-      tags = {
-        "k8s.io/cluster-autoscaler/enabled"             = "true"
+      labels = {
+        group = "team-b"
       }
     }
   }
+
 
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = false
