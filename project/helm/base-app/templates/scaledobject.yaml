@@ -7,8 +7,8 @@ spec:
     name: {{ .Release.Name }}-deployment
   minReplicaCount: 0
   maxReplicaCount: 1
-  pollingInterval: 15          # szybsze sprawdzanie
-  cooldownPeriod: 60           # zeskaluje po 60s od idle
+  pollingInterval: 15
+  cooldownPeriod: 900
   initialCooldownPeriod: 30
   triggers:
     - type: prometheus
