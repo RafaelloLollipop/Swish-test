@@ -6,9 +6,9 @@ spec:
   scaleTargetRef:
     name: {{ .Release.Name }}-service
   minReplicaCount: 0
-  maxReplicaCount: 1
-  pollingInterval: 30
-  cooldownPeriod: 600
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicaCount }}
+  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
+  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
   triggers:
     - type: prometheus
       metadata:
@@ -19,4 +19,4 @@ spec:
             namespace="{{ .Release.Namespace }}",
             pod=~"{{ .Release.Name }}.*"
           }[{{ .Values.autoscaling.queryRange }}]) * 100
-        threshold: 5
+        threshold: "{{ .Values.autoscaling.threshold }}"

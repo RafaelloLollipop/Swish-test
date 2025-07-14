@@ -12,3 +12,11 @@ resources:
   gpu: "0"
 
 team: team-a
+
+autoscaling:
+  enabled: true
+  maxReplicaCount: 1
+  pollingInterval: 30
+  cooldownPeriod: 600
+  threshold: "5"
+  queryRange: "15m"
