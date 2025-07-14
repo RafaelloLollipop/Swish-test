@@ -9,6 +9,7 @@ spec:
   maxReplicaCount: {{ .Values.autoscaling.maxReplicaCount }}
   pollingInterval: {{ .Values.autoscaling.pollingInterval }}
   cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
+  initialCooldownPeriod: {{ .Values.autoscaling.initialCooldownPeriod }}
   triggers:
     - type: prometheus
       metadata:

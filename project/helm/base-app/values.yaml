@@ -18,5 +18,6 @@ autoscaling:
   maxReplicaCount: 1
   pollingInterval: 30
   cooldownPeriod: 600
+  initialCooldownPeriod: 600
   threshold: "5"
   queryRange: "15m"
