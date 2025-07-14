@@ -53,6 +53,7 @@ jobs:
           severity: CRITICAL
           exit-code: 1
           output: trivy-report.json
+          trivyignores: general/docker/py2py3r/.trivyignore
 
       - name: Upload Trivy scan report
         if: always()
