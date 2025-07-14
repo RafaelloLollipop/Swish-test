@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "swish-play"
+  cluster_name = "swish-play-project"
 }
 
 module "eks" {
