@@ -117,7 +117,7 @@ jobs:
             --namespace swish \
             --create-namespace \
             --set image.repository=vallher/dev-env \
-            --set image.tag=${{ needs.build.outputs.IMAGE_TAG }}
+            --set image.tag=${{ needs.build.outputs.IMAGE_TAG }} \
             --set resources.cpu=${{ github.event.inputs.cpu }} \
             --set resources.memory=${{ github.event.inputs.memory }} \
             --set user=${{ github.event.inputs.user }} \
