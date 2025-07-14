@@ -3,7 +3,6 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
-replicaCount: 1
 containerPort: 8080
 
 resources:
@@ -21,5 +20,5 @@ autoscaling:
   cooldownPeriod: 30
   idleReplicaCount: 0
   initialCooldownPeriod: 30
-  threshold: "0.02"
+  threshold: "0.05"
   queryRange: "15m"

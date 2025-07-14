@@ -6,7 +6,6 @@ metadata:
     app: {{ .Release.Name }}
     team: {{ .Values.team | quote }}
 spec:
-  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
