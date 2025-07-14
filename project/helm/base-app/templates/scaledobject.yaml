@@ -15,8 +15,10 @@ spec:
         serverAddress: "http://prometheus-operated.monitoring:9090"
         metricName: {{ .Release.Name }}-cpu-idle
         query: |
-          avg_over_time(container_cpu_usage_seconds_total{
-            namespace="{{ .Release.Namespace }}",
-            pod=~"{{ .Release.Name }}.*"
-          }[{{ .Values.autoscaling.queryRange }}]) * 100
+          avg(
+            avg_over_time(container_cpu_usage_seconds_total{
+              namespace="{{ .Release.Namespace }}",
+              pod=~"{{ .Release.Name }}.*"
+            }[{{ .Values.autoscaling.queryRange }}])
+          ) * 100
         threshold: "{{ .Values.autoscaling.threshold }}"
