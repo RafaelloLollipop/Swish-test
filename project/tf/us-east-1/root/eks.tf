@@ -13,22 +13,17 @@ module "eks" {
   vpc_id          = module.vpc.vpc_id
 
 eks_managed_node_groups = {
-    tools = {
-      instance_types = ["t3.medium"]
-      min_size       = 1
-      max_size       = 3
-      desired_size   = 1
+  default = {
+    desired_capacity = 1
+    max_capacity     = 3
+    min_capacity     = 1
 
-      taints = [{
-        key    = "group"
-        value  = "tools"
-        effect = "NO_SCHEDULE"
-      }]
-
-      labels = {
-        group = "tools"
-      }
+    instance_type = "t3.medium"
+    taints        = []
+    node_labels = {
+      group = "default"
     }
+  }
 
     team-a = {
       instance_types = ["t3.small"]

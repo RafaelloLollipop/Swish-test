@@ -1,0 +1,16 @@
+autoDiscovery:
+  clusterName: swish-play-project
+
+awsRegion: us-east-1
+
+rbac:
+  serviceAccount:
+    create: true
+    name: cluster-autoscaler
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::350152846698:role/eks-cluster-autoscaler
+
+extraArgs:
+  balance-similar-node-groups: "true"
+  skip-nodes-with-local-storage: "false"
+  expander: least-waste
