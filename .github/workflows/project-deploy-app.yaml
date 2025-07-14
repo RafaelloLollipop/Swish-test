@@ -108,12 +108,12 @@ jobs:
 
       - name: Helm template
         run: |
-          helm template swish-app ./general/helm/base-app
+          helm template swish-app ./project/helm/base-app
 
       - name: Deploy app with Helm
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name swish-play-general
-          helm upgrade --install swish-app ./general/helm/base-app \
+          aws eks update-kubeconfig --region us-east-1 --name swish-play-project
+          helm upgrade --install swish-app ./project/helm/base-app \
             --namespace swish \
             --create-namespace \
             --set image.repository=vallher/dev-env \

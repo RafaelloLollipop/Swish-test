@@ -42,7 +42,7 @@ resource "aws_iam_role_policy" "eks_access" {
         Action   = [
           "eks:DescribeCluster"
         ]
-        Resource = "arn:aws:eks:us-east-1:${data.aws_caller_identity.current.account_id}:cluster/swish-play"
+        Resource = "arn:aws:eks:us-east-1:${data.aws_caller_identity.current.account_id}:cluster/swish-play-project"
       }
     ]
   })
