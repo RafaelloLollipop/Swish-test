@@ -85,18 +85,40 @@ jobs:
       - name: Push image
         run: docker push vallher/dev-env:${{ env.IMAGE_TAG }}
 
-#      - name: Install Helm
-#        uses: azure/setup-helm@v3
-#
-#      - name: Deploy dev env with Helm
-#        run: |
-#          helm upgrade --install dev-env-${{ github.run_id }} ./charts/dev-env \
-#            --namespace dev-environments \
-#            --create-namespace \
-#            --set image=${{ github.event.inputs.base_image }} \
-#            --set packages=${{ github.event.inputs.packages }} \
-#            --set resources.cpu=${{ github.event.inputs.cpu }} \
-#            --set resources.memory=${{ github.event.inputs.memory }} \
-#            --set resources.gpu=${{ github.event.inputs.gpu }} \
-#            --set user=${{ github.event.inputs.user }} \
-#            --set team=${{ github.event.inputs.team }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::350152846698:role/github-actions-eks-deploy
+          aws-region: us-east-1
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.14.0
+
+      - name: Helm template
+        run: |
+          helm template swish-app ./general/helm/base-app
+
+      - name: Deploy app with Helm
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name swish-play-general
+          helm upgrade --install swish-app ./general/helm/base-app \
+            --namespace swish \
+            --create-namespace \
+            --set image.repository=vallher/dev-env \
+            --set image.tag=${{ needs.build.outputs.IMAGE_TAG }}
+            --set resources.cpu=${{ github.event.inputs.cpu }} \
+            --set resources.memory=${{ github.event.inputs.memory }} \
+            --set user=${{ github.event.inputs.user }} \
+            --set team=${{ github.event.inputs.team }}
