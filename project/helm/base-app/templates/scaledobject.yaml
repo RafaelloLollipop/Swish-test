@@ -10,17 +10,16 @@ spec:
 #  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
 #  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
 #  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
-  initialCooldownPeriod: 30
+#  initialCooldownPeriod: 30
   triggers:
     - type: prometheus
       metadata:
         serverAddress: "http://prometheus-operated.monitoring:9090"
         metricName: {{ .Release.Name }}-cpu-idle
         query: |
-          avg(
             avg_over_time(container_cpu_usage_seconds_total{
+              container!="",
               namespace="{{ .Release.Namespace }}",
               pod=~"{{ .Release.Name }}.*"
             }[{{ .Values.autoscaling.queryRange }}])
-          )
         threshold: "{{ .Values.autoscaling.threshold }}"
