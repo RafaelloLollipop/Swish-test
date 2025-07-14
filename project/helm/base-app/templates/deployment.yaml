@@ -2,15 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-service
+  labels:
+    app: {{ .Release.Name }}
+    team: {{ .Values.team | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
+      team: {{ .Values.team | quote }}
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}
+        team: {{ .Values.team | quote }}
     spec:
       nodeSelector:
         team: {{ .Values.team | quote }}

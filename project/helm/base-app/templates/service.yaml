@@ -6,6 +6,7 @@ spec:
   type: NodePort
   selector:
     app: {{ .Release.Name }}
+    team: {{ .Values.team | quote }}
   ports:
     - protocol: TCP
       port: 80
