@@ -1,0 +1,1 @@
+avg_over_time(container_cpu_usage_seconds_total{namespace="dev", pod=~"jupyter-dev.*"}[15m]) * 100
