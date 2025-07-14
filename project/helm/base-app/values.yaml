@@ -19,6 +19,6 @@ autoscaling:
   pollingInterval: 30
   cooldownPeriod: 30
   idleReplicaCount: 0
-  initialCooldownPeriod: 30
+  initialCooldownPeriod: 60
   threshold: "0.05"
-  queryRange: "15m"
+  queryRange: "30s"
