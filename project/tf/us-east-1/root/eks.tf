@@ -27,35 +27,35 @@ eks_managed_node_groups = {
 
     team-a = {
       instance_types = ["t3.small"]
-      min_size       = 1
+      min_size       = 0
       max_size       = 5
-      desired_size   = 1
+      desired_size   = 0
 
       taints = [{
-        key    = "group"
+        key    = "team"
         value  = "team-a"
         effect = "NO_SCHEDULE"
       }]
 
       labels = {
-        group = "team-a"
+        team = "team-a"
       }
     }
 
     team-b = {
       instance_types = ["t3.small"]
-      min_size       = 1
+      min_size       = 0
       max_size       = 5
-      desired_size   = 1
+      desired_size   = 0
 
       taints = [{
-        key    = "group"
+        key    = "team"
         value  = "team-b"
         effect = "NO_SCHEDULE"
       }]
 
       labels = {
-        group = "team-b"
+        team = "team-b"
       }
     }
   }
