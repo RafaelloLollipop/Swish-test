@@ -4,13 +4,13 @@ metadata:
   name: {{ .Release.Name }}-autoscaler
 spec:
   scaleTargetRef:
-    name: {{ .Release.Name }}-service
+    name: {{ .Release.Name }}-deployment
   minReplicaCount: 0
-  maxReplicaCount: {{ .Values.autoscaling.maxReplicaCount }}
-  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
-  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
-  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
-  initialCooldownPeriod: {{ .Values.autoscaling.initialCooldownPeriod }}
+  maxReplicaCount: 1
+#  idleReplicaCount: {{ .Values.autoscaling.idleReplicaCount }}
+#  pollingInterval: {{ .Values.autoscaling.pollingInterval }}
+#  cooldownPeriod: {{ .Values.autoscaling.cooldownPeriod }}
+  initialCooldownPeriod: 30
   triggers:
     - type: prometheus
       metadata:

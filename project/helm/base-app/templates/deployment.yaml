@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ .Release.Name }}-deployment
   labels:
     app: {{ .Release.Name }}
     team: {{ .Values.team | quote }}
