@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: swish-deployment
+  name: {{ .Release.Name }}-service
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: swish
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: swish
+        app: {{ .Release.Name }}
     spec:
       nodeSelector:
         team: {{ .Values.team | quote }}
